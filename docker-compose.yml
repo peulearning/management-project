@@ -1,33 +1,22 @@
-version: '3.8'
-
 services:
   app:
     build: .
-    container_name: gerenciador-projetos
-    depends_on:
-      - db
+    container_name: management_app
     ports:
       - "8080:8080"
+    depends_on:
+      - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/gerenciador?createDatabaseIfNotExist=true
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    networks:
-      - app-network
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/management_db?serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ""
 
   db:
     image: mysql:8.0
-    container_name: mysql-db
+    container_name: management_db
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=db_gerenciador
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: management_db
     ports:
       - "3306:3306"
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
