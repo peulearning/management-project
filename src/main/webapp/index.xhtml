@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:r="http://richfaces.org/rich">
+
+<h:head>
+    <title>Kanban - Gerenciador de Projetos</title>
+    <h:outputStylesheet name="styles.css"/>
+    <h:outputScript name="richfaces.js"/>
+</h:head>
+
+<h:body>
+
+    <!-- Painel Kanban -->
+    <h:form>
+        <h:panelGrid columns="3" styleClass="kanban-container">
+            <!-- To-Do Column -->
+            <h:panelGrid styleClass="kanban-column">
+                <h:outputText value="To-Do" styleClass="kanban-column-title"/>
+                <r:dragSource for="todoTask1">
+                    <h:panelGrid id="todoTask1" styleClass="task-item">
+                        <h:outputText value="Estudar JSF" />
+                    </h:panelGrid>
+                </r:dragSource>
+                <r:dragSource for="todoTask2">
+                    <h:panelGrid id="todoTask2" styleClass="task-item">
+                        <h:outputText value="Finalizar Projeto" />
+                    </h:panelGrid>
+                </r:dragSource>
+            </h:panelGrid>
+
+            <!-- In Progress Column -->
+            <h:panelGrid styleClass="kanban-column">
+                <h:outputText value="In Progress" styleClass="kanban-column-title"/>
+                <r:dropTarget for="todoTask1">
+                    <h:panelGrid id="inProgressTask1" styleClass="task-item">
+                        <h:outputText value="Desenvolver Backend" />
+                    </h:panelGrid>
+                </r:dropTarget>
+            </h:panelGrid>
+
+            <!-- Done Column -->
+            <h:panelGrid styleClass="kanban-column">
+                <h:outputText value="Done" styleClass="kanban-column-title"/>
+                <h:panelGrid styleClass="task-item">
+                    <h:outputText value="Deploy do Sistema" />
+                </h:panelGrid>
+            </h:panelGrid>
+        </h:panelGrid>
+    </h:form>
+
+    <h:form>
+        <h:commandButton value="Adicionar Tarefa" action="#{kanbanBean.addTask}" />
+    </h:form>
+
+</h:body>
+</html>
