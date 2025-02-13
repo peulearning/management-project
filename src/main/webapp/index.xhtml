@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
     <title>Kanban - Gerenciador de Projetos</title>
-    <h:outputStylesheet name="/resources/styles.css"/>
+    <h:outputStylesheet name="styles.css"/>
 </h:head>
 
 <h:body>
@@ -16,44 +17,41 @@
         <!-- Coluna To-Do -->
         <div class="kanban-column">
             <h2>To-Do</h2>
-            <div class="task-item" draggable="true">Estudar JSF</div>
-            <div class="task-item" draggable="true">Finalizar Projeto</div>
+            <ui:repeat value="#{kanbanBean.todoTasks}" var="task">
+                <div class="task-item" draggable="true">
+                    <h:outputText value="#{task.title}" />
+                </div>
+            </ui:repeat>
         </div>
 
         <!-- Coluna In Progress -->
         <div class="kanban-column">
             <h2>In Progress</h2>
-            <div class="task-item" draggable="true">Desenvolver Backend</div>
+            <ui:repeat value="#{kanbanBean.inProgressTasks}" var="task">
+                <div class="task-item" draggable="true">
+                    <h:outputText value="#{task.title}" />
+                </div>
+            </ui:repeat>
         </div>
 
         <!-- Coluna Done -->
         <div class="kanban-column">
             <h2>Done</h2>
-            <div class="task-item">Deploy do Sistema</div>
+            <ui:repeat value="#{kanbanBean.doneTasks}" var="task">
+                <div class="task-item">
+                    <h:outputText value="#{task.title}" />
+                </div>
+            </ui:repeat>
         </div>
     </div>
 
-        <div class="add-task">
-            <h:inputText id="newTask" value="#{kanbanBean.newTaskTitle}" placeholder="Nova Tarefa"/>
-            <h:commandButton value="Adicionar Tarefa" action="#{kanbanBean.addTask}" />
-        </div>
+    <div class="add-task">
+        <h:inputText id="newTask" value="#{kanbanBean.newTaskTitle}" placeholder="Nova Tarefa" />
+        <h:commandButton value="Adicionar Tarefa" action="#{kanbanBean.addTask}" />
+    </div>
 
     <script>
-        function addTask() {
-            const taskInput = document.getElementById('newTask');
-            const taskTitle = taskInput.value.trim();
-
-            if (taskTitle) {
-                const todoColumn = document.querySelector('.kanban-column:first-child');
-                const newTask = document.createElement('div');
-                newTask.className = 'task-item';
-                newTask.draggable = true;
-                newTask.textContent = taskTitle;
-
-                todoColumn.appendChild(newTask);
-                taskInput.value = ''; // Limpa o campo de entrada
-            }
-        }
+        // Função para adicionar nova tarefa (se necessário)
     </script>
 
 </h:body>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"   >
+
+<h:head>
+    <title>Tarefas</title>
+</h:head>
+
+<h:body>
+
+    <h1>Lista de Tarefas</h1>
+
+    <h:form>
+        <h:inputText value="#{taskBean.newTask.title}" placeholder="Nova Tarefa" />
+        <h:commandButton value="Adicionar" action="#{taskBean.addTask}" />
+    </h:form>
+
+    <h:dataTable value="#{taskBean.tasks}" var="task">
+        <h:column>
+            <f:facet name="header">Título</f:facet>
+            <h:outputText value="#{task.title}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">Descrição</f:facet>
+            <h:outputText value="#{task.description}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">Prioridade</f:facet>
+            <h:outputText value="#{task.priority}" />
+        </h:column>
+    </h:dataTable>
+
+</h:body>
+</html>
