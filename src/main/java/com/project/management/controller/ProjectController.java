@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+
 @Controller
 @RequestMapping("/projects")
 public class ProjectController {
@@ -20,15 +21,16 @@ public class ProjectController {
     private ProjectService projectService;
 
     @GetMapping
-    public String listProjects(Model model){
+    public String listProjects(Model model) {
         List<Project> projects = projectService.findAll();
+        System.out.println("Total de projetos carregados: " + projects.size());
         model.addAttribute("projects", projects);
-        return "projects";
+        return "projects"; // Certifique-se que isso retorna projects.xhtml
     }
 
     @PostMapping
-    public String createProject(@ModelAttribute Project project){
+    public String createProject(@ModelAttribute Project project) {
         projectService.save(project);
-        return "redirect:/projects";
+        return "redirect:/projects"; // Redireciona para a lista de projetos
     }
 }
