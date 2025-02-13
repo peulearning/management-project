@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+    <title>Projetos</title>
+</h:head>
+
+<h:body>
+
+    <h1>Lista de Projetos</h1>
+
+    <h:form>
+        <h:inputText value="#{projectController.newProject.title}" placeholder="Título do Projeto" required="true"/>
+        <h:inputText value="#{projectController.newProject.description}" placeholder="Descrição do Projeto" required="true"/>
+        <h:commandButton value="Adicionar Projeto" action="#{projectController.createProject}" />
+    </h:form>
+
+    <h:dataTable value="#{projectController.projects}" var="projects">
+        <h:column>
+            <f:facet name="header">Título</f:facet>
+            <h:outputText value="#{projects.title}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">Descrição</f:facet>
+            <h:outputText value="#{projects.description}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">Ações</f:facet>
+            <h:commandButton value="Ver Tarefas" action="tasks?projectId=#{project.id}" />
+        </h:column>
+    </h:dataTable>
+
+</h:body>
+</html>

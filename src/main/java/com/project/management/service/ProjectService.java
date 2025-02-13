@@ -13,8 +13,10 @@ public class ProjectService {
     @Autowired
     private ProjectRepository repository;
 
-    public List<Project> findAll(){
-        return repository.findAll();
+    public List<Project> findAll() {
+        List<Project> projects = repository.findAll();
+        System.out.println("Projetos encontrados: " + projects.size());
+        return projects;
     }
 
     public Project save(Project project){
