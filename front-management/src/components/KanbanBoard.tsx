@@ -1,7 +1,20 @@
 // src/components/KanbanBoard.tsx
 import React, { useState } from 'react';
-import { DndContext, closestCorners, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import {
+  DndContext,
+  closestCorners,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  DragEndEvent
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy
+} from '@dnd-kit/sortable';
 import { Grid, Paper, Typography } from '@mui/material';
 import TaskList from './TaskList';
 import TaskModal from './TaskModal';
@@ -24,13 +37,18 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ project, onUpdateProject }) =
     })
   );
 
-  const handleDragEnd = (event: any) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+
+    if (!over) return; // Garante que o item foi solto sobre algo válido
 
     if (active.id !== over.id) {
       setTasks((items) => {
         const oldIndex = items.findIndex((i) => i.id === active.id);
         const newIndex = items.findIndex((i) => i.id === over.id);
+
+        if (oldIndex === -1 || newIndex === -1) return items; // Previne erros caso o item não seja encontrado
+
         const newItems = arrayMove(items, oldIndex, newIndex);
         onUpdateProject({ ...project, tasks: newItems });
         return newItems;
@@ -54,11 +72,6 @@ const KanbanBoard: React.FC<KanbanBoardProps> = ({ project, onUpdateProject }) =
     const updatedTasks = tasks.filter(task => task.id !== taskId);
     setTasks(updatedTasks);
     onUpdateProject({ ...project, tasks: updatedTasks });
-  };
-
-  const openAddTaskModal = () => {
-    setEditingTask(null);
-    setIsModalOpen(true);
   };
 
   const openEditTaskModal = (task: Task) => {

@@ -1,8 +1,8 @@
 // src/App.tsx
-import React, { useState } from 'react';
-import { ThemeProvider, createTheme, CssBaseline, Container, Typography, Button } from '@mui/material';
+import { useState } from 'react';
+import { ThemeProvider, createTheme, CssBaseline, Container, Typography } from '@mui/material';
 import KanbanBoard from './components/KanbanBoard';
-import { Project, Task, Priority } from './types';
+import { Project, Priority } from './types';
 
 const darkTheme = createTheme({
   palette: {
